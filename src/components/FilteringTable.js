@@ -2,7 +2,7 @@ import React from "react";
 import { useMemo } from "react";
 import { COLUMNS } from "./columns";
 import MOCK_DATA from "./MOCK_DATA.json";
-import { useTable, useGlobalFilter } from "react-table";
+import { useTable, useGlobalFilter, useFilters } from "react-table";
 import "./table.css";
 import { GlobalFilter } from "./GlobalFilter";
 
@@ -24,6 +24,7 @@ export const FilteringTable = () => {
       columns,
       data,
     },
+    useFilters,
     useGlobalFilter
   );
 
@@ -37,7 +38,10 @@ export const FilteringTable = () => {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((header) => (
-                <th {...header.getHeaderProps()}>{header.render("Header")}</th>
+                <th {...header.getHeaderProps()}>
+                  {header.render("Header")}
+                  <div>{header.canFilter ? header.render("Filter") : null}</div>
+                </th>
               ))}
             </tr>
           ))}
